@@ -23,8 +23,8 @@ class MembersCog(commands.Cog):
                     msg = await self.bot.wait_for("message", timeout=60.0, check=check_mention)
                     dialog.append(msg)
                     regex = r"^\s*<@!\d+>\s*(.+)\s*$"
-                    typed_name = re.match(regex, msg.content).group(1) if re.match(regex,
-                                                                                   msg.content) is not None else None
+                    typed_name = re.match(regex, msg.content).group(1).strip() if re.match(regex,
+                                                                                           msg.content) is not None else None
                     if typed_name is None:
                         dialog.append(await channel.send("Что-то пошло не так. Попробуйте ещё раз"))
                         continue
