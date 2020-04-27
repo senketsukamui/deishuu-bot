@@ -48,6 +48,5 @@ class MembersCog(commands.Cog):
         await self.bot.change_presence(status=discord.Status.online, activity=game)
         print(f'Successfully logged in and booted...!')
 
-
 def setup(bot):
     bot.add_cog(MembersCog(bot))
