@@ -48,5 +48,27 @@ class MembersCog(commands.Cog):
         await self.bot.change_presence(status=discord.Status.online, activity=game)
         print(f'Successfully logged in and booted...!')
 
+    @commands.command(name="migrate")
+    @commands.has_guild_permissions(move_members=True)
+    async def migrate(self, ctx, first_channel: discord.VoiceChannel, second_channel: discord.VoiceChannel):
+        """
+        Moves members from one voice channel to another
+        :param first_channel: name of channel members in
+        :param second_channel:  name of channel to move members in
+        """
+        if first_channel != second_channel:
+            currentMembers = first_channel.members
+            for member in currentMembers:
+                await member.move_to(second_channel)
+            return True
+        await ctx.send("Пожалуйста, укажите два неодинаковых канала")
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, discord.ext.commands.MissingRequiredArgument):
+            await ctx.send("Вы указали только один аргумент. Попробуйте ещё раз")
+        elif isinstance(error, discord.ext.commands.BadArgument):
+            await ctx.send("Вы указали неверное название канала. Попробуйте ещё раз")
+
 def setup(bot):
     bot.add_cog(MembersCog(bot))
