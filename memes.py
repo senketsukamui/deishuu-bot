@@ -16,8 +16,6 @@ class MemesCog(commands.Cog):
                 if r.status == 200:
                     json = await r.json()
                     meme_link = json.get("memes")[0].get("url")
-                    await ctx.send(meme_link) \
- \
- \
+                    await ctx.send(meme_link)
 def setup(bot):
     bot.add_cog(MemesCog(bot))
